@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8ae8bb09-0383-4275-9a1c-515aecfdf1e1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/dataset_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_generation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebook/compute_GT_similarity.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebook/csv_dataset.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebook/gen_noisy.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebook/speech_to_text.ipynb" beforeDir="false" />
-    </list>
+    <list default="true" id="8ae8bb09-0383-4275-9a1c-515aecfdf1e1" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,8 +42,8 @@
       <file leaf-file-name="train_windowing_C.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train_windowing_C.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="167" column="24" selection-start-line="167" selection-start-column="24" selection-end-line="167" selection-end-column="24" />
+            <state relative-caret-position="501">
+              <caret line="182" column="51" lean-forward="true" selection-start-line="182" selection-start-column="51" selection-end-line="182" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -338,7 +332,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-284" y="-1057" width="1920" height="1057" extended-state="1" />
+    <frame x="-284" y="-1057" width="1920" height="1057" extended-state="0" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49757674" weight="0.328594" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50159746" side_tool="true" visible="true" weight="0.13229166" />
@@ -698,8 +692,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_windowing_C.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="167" column="24" selection-start-line="167" selection-start-column="24" selection-end-line="167" selection-end-column="24" />
+        <state relative-caret-position="501">
+          <caret line="182" column="51" lean-forward="true" selection-start-line="182" selection-start-column="51" selection-end-line="182" selection-end-column="51" />
         </state>
       </provider>
     </entry>
