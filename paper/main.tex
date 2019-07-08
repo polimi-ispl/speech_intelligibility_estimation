@@ -1,0 +1,115 @@
+\documentclass[conference]{IEEEtran}
+\usepackage[latin9]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+
+
+%\makeatletter
+
+%\def\ps@IEEEtitlepagestyle{%
+%  \def\@oddfoot{\mycopyrightnotice}%
+%}
+%
+%\def\mycopyrightnotice{
+%%For papers in which all authors are employed by the US government, the copyright notice is:
+%%   {\footnotesize  U.S. Government work not protected by U.S. copyright \hfill 2016 IEEE International Workshop on Information Forensics and Security (WIFS) }
+%%
+%%For papers in which all authors are employed by a Crown government (UK, Canada, and Australia), the copyright notice is:
+%%  {\footnotesize  978-1-5090-1138-4/16/\$31.00 ©2016 Crown \hfill 2016 IEEE International Workshop on Information Forensics and Security (WIFS) }
+%%
+%%For papers in which all authors are employed by the European Union, the copyright notice is:
+%%{\footnotesize  978-1-5090-1138-4/16/\$31.00 ©2016 European Union \hfill 2016 IEEE International Workshop on Information Forensics and Security (WIFS) }
+%%
+%%For all other papers the copyright notice is:
+%  {\footnotesize  978-1-5090-1138-4/16/\$31.00 ©2016 IEEE \hfill 2016 IEEE International Workshop on Information Forensics and Security (WIFS) }
+%  \gdef\mycopyrightnotice{}% just in case
+%}
+%\makeatother
+
+
+
+\usepackage{stfloats}
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+%
+\title{Audio Surveillance Tapping Transcription Quality Estimation Reliability}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+% Yo
+\author{
+\IEEEauthorblockN{Clara Borrelli, Paolo Bestagini, Fabio Antonacci, Augusto Sarti, Stefano Tubaro}
+\IEEEauthorblockA{Dipartimento di Elettronica, Informazione e Bioingegneria\\ Politecnico di Milano, Piazza Leonardo da Vinci 32, 20133 Milano, Italy\\
+Email:  \{clara.borrelli, paolo.bestagini, fabio.antonacci, augusto.sarti, stefano.tubaro\}@polimi.it}
+}
+
+% make the title area
+\maketitle
+
+
+%INCLUDES COPYRIGHT NOTICE: one of three copyright notice should be included.
+%Uncomment the appropriate line below, according to the authors %affiliation:
+\begin{figure}[b]
+\vspace{-0.3cm}
+\parbox{\hsize}{\em
+%information about the event:
+WIFS`2019, December, 9-12, 2019, Delft, Netherlands.
+%copyright notice: one of four copyright notices below should be included. Choose the right one below according to the authors affiliation:
+%XXX-X-XXXX-XXXX-X/XX/\$XX.00 \ \copyright 2017 European Union.
+%XXX-X-XXXX-XXXX-X/XX/\$XX.00  \ \copyright 2017 Crown.
+%U.S. Government work not protected by U.S. copyright.
+%XXX-X-XXXX-XXXX-X/XX/\$XX.00 \ \copyright 2017 IEEE.
+XXX-X-XXXX-XXXX-X/XX/\$XX.00 \ \copyright 2019 IEEE.
+}\end{figure}
+
+
+% As a general rule, do not put math, special symbols or citations
+% in the abstract
+\begin{abstract}
+The abstract goes here.
+\end{abstract}
+
+% no keywords
+
+
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
+\input{intro.tex}
+\input{problem.tex}
+\input{method.tex}
+\input{results.tex}
+\input{conclusions.tex}
+
+
+% use section* for acknowledgment
+\section*{Acknowledgment}
+This material is based on research sponsored by DARPA and Air Force Research Laboratory (AFRL) under agreement number FA8750-16-2-0173. The U.S. Government is authorized to reproduce and distribute reprints for Governmental purposes notwithstanding any copyright notation thereon. The views and conclusions contained herein are those of the authors and should not be interpreted as necessarily representing the official policies or endorsements, either expressed or implied, of DARPA and Air Force Research Laboratory (AFRL) or the U.S. Government.
+
+\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+\bibliography{biblio}
+%
+
+% that's all folks
+\end{document}
+
+
