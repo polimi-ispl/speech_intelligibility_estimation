@@ -58,7 +58,6 @@ def transcribe(song_path, transcriber):
 
 
 def dataset_transcription(dataset_csv_path, transcriber):
-    print(dataset_csv_path)
     orig_df = pd.read_csv(dataset_csv_path)
     audio_path_list = orig_df['path'].to_list()
     f_part = partial(transcribe, transcriber=transcriber)
@@ -116,7 +115,6 @@ def add_noise(in_path, dataset_name, noise_type, snr):
 
     # rimuovere
     dest_path = dest_path.replace('dev-clean', 'dev-clean_reduced')
-
     dest_path = dest_path.replace(dest_path.split('.')[-1], 'wav')
 
     # check if file exists
@@ -150,10 +148,10 @@ def add_noise(in_path, dataset_name, noise_type, snr):
 
     # apply scaling
     noise_gain = 1 / (10 ** (snr / 20))
-    noise_scaled = 0.5*(noise * noise_gain)
+    noise_scaled = noise * noise_gain
 
     # mix the two signals
-    noisy = clean + noise_scaled
+    noisy = 0.5*(clean + noise_scaled)
 
     # save file to disk
     try:
