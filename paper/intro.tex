@@ -5,14 +5,26 @@ Thanks to the recent advances in technology, audio communication systems are bec
 At the same time the ability of monitoring environmental, digital or phone communications has become an urgent necessity for national security issues. These technologies can effectively assist law enforcement agencies in foiling terrorist attacks or revealing harmful intents. The aforementioned heterogeneity of the communication channels has produced in this sense both advantages and drawbacks.  
 
 
-On one side, information gathering has become easier and ubiquitous. Regarding environmental monitoring, audio surveillance devices are getting cheaper and easier to deploy. Subsequently, the number of control spots can be further increased, ensuring higher coverage, for example, in large public spaces. Concerning digital or phone wire taps, ...
+On one side, information gathering has become easier and ubiquitous. Regarding environmental monitoring, audio surveillance devices are getting cheaper and easier to deploy. Subsequently, the number of control spots can be further increased, ensuring higher coverage, for example, in large public spaces. Concerning digital or phone wire taps, \textit{why is easier to collect data? because we have so many communication channels? }
 
 
-On the other side, a blind and massive data collection can results in huge databases whose manual inspection might be infeasible. Moreover the audio results can be affected by several types of noisy which can degrade the quality of the records and compromise the intelligibility of the conversation.
+On the other side, a blind and massive data collection can results in huge databases whose manual inspection might be infeasible. Tools like automatic transcription agents would be of great help for both investigative and surveillance purposes. However, given the diversity of context in which data is collected,the audio excerpts can be affected by several types of noise which can degrade the quality of the records and compromise the intelligibility of a possible relevant conversation. 
 
 
-For these reasons it is needed to develop automatic and intelligent methods that allow to speed up the analysis of these huge corpora but at the same time take in account the variety of the involved devices and environments. Depending on the characteristics of the audio excerpts, these systems should be able to extract relevant information while guaranteeing control to the human user.
+For these reasons it is needed to develop automatic and intelligent methods that allow to speed up the analysis of these huge corpora but at the same time take in account the variety of the involved devices and environments. Depending on the characteristics of the collected audio excerpts, these systems should be able to extract relevant information while guaranteeing control to the human user. 
 
+
+In this work we try to meet these needs by proposing a framework able to evaluate the quality of noisy speech recordings. Given the specified context, this evaluation is based on the estimation of the likelihood of obtaining reliable transcript using a generic automatic speech-to-text engine. 
+
+
+Our method can be employed in two different applicative contexts. The first one is for \textit{not sure what is the meaning of the bullet point. We want to propose an index to be exploited for tuning automatic transcription agents? or we want to compute the intelligibility index on large databases to evaluate the quality of a specific dataset?}.
+The second one is, as already mentioned, to provide a useful tool in managing data acquired by audio surveillance systems. The model provides a quality feedback to investigators, that will be able to discriminate reliable from non reliable automatically extracted transcriptions.
+ 
+
+The main rationale is to use a data-driven approach. Our system is composed of two main blocks. In the first one, a suitable set of features is extracted from the original audio signal. This features provide a numerical description of the fundamental characteristics of the signal analysed. Then, both a regressor and a classificator are designed and trained to predict the quality level (or a discrete label) of noisy speech audio signal. 
+
+
+The implemented model has been tested on a large dataset of transcribed speech signal augmented with several type of noises. The ground truth has been obtained starting from the variation between the original transcription and the transcription of the noisy signal.
 
 \begin{itemize}
 
