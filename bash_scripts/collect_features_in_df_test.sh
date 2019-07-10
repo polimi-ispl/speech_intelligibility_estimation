@@ -8,4 +8,4 @@ export PYTHONPATH=$PYTHONPATH:$parentdir
 
 # Generate Noisy Tracks
 echo 'Collect Features in Dataframe Test'
-python3 ./collect_features_in_df.py --dataset_name test-clean --transcriber google
+python3 ./collect_features_in_df.py --dataset_name test-clean --transcriber sphinx

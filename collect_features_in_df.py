@@ -15,7 +15,8 @@ def get_jaccard_sim(str1, str2):
 def collect_feat_in_df(dataset, transcriber):
     columns = ['path', 'noise', 'snr', 'mfcc', 'sfl', 'sc', 'sroff', 'zcr', 'rms', 'y_value', 'y_label']
     snr = [0, 2, 5, 7, 10, 12, 15]
-    noise_type = ['train', 'hall', 'restaurant', 'car', 'industrial', 'crowd', 'traffic']
+    noise_type = ['train', 'hall', 'restaurant', 'car', 'industrial', 'crowd', 'traffic', 'speech1', 'speech2',
+                  'speech3']
     bins = [0.0, 0.2, 0.4, 0.6, 0.8]
     feat_df = pd.DataFrame(columns=columns)
 

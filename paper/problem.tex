@@ -1,9 +1,14 @@
 \section{Problem statement and background}
 
-In this section bla bla ...
+In this section we first present a formal problem statement, specifying all the elements involved in the framework proposed. Secondly, we present a short review of the concept of intelligibility at the state of the art.
 
 \subsection{Problem formulation}
-Given an audio excerpt $x(t)$ composed by ... containing some speech ... we want to estimate how much it is useful for an analyst.
+An audio excerpt $x(t)$ composed by speech in a noisy environment can be written as
+
+\[ x(t) = s(t) + n(t) \],
+where $s(t)$ is the speech signal while $n(t)$ is the noise signal.
+Assume a speech-to-text model $STT(\cdot)$ is selected and that, given as input the audio signal, is able to recover the correspondent transcription.
+ ... we want to estimate how much it is useful for an analyst.
 This is done by estimating a score indicating how likely is it possible to correctly understand the speech.
 
 \subsection{Background}

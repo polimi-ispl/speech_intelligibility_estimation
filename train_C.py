@@ -23,6 +23,15 @@ def df_to_feat_idx(feat_df, key, fun):
 
 def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max):
 
+    res_file_name = 'res_norm-{}_outliers-{}_rms-{}_alg-{}_win-{}.pkl'.format(norm,
+                                                                              filter_outliers,
+                                                                              str(rms_th).replace('.', ''),
+                                                                              alg,
+                                                                              win_min_max)
+    if os.path.exists(os.path.join('/nas/home/cborrelli/speech_forensics/results_add', res_file_name)):
+        return
+
+
     # Load the features
     test_data_path = '/nas/home/cborrelli/speech_forensics/notebook/pickle/features_test-clean.pkl'
     train_data_path = '/nas/home/cborrelli/speech_forensics/notebook/pickle/features_train-clean-100.pkl'
@@ -126,12 +135,7 @@ def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max):
     res_df.loc[:, 'y_pred_r'] = y_pred_r
 
     # Save results
-    res_file_name = 'res_norm-{}_outliers-{}_rms-{}_alg-{}_win-{}.pkl'.format(norm,
-                                                                              filter_outliers,
-                                                                              str(rms_th).replace('.', ''),
-                                                                              alg,
-                                                                              win_min_max)
-    res_df.to_pickle(os.path.join('/nas/home/cborrelli/speech_forensics/results', res_file_name))
+    res_df.to_pickle(os.path.join('/nas/home/cborrelli/speech_forensics/results_add', res_file_name))
 
 
 if __name__ == '__main__':
