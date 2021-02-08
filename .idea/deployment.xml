@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="ispl-bayes">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="ispl-bayes" showExcludedInSync="true">
     <serverData>
       <paths name="ispl-bayes">
         <serverdata>
@@ -14,6 +14,9 @@
             <excludedPath path="/nas/home/cborrelli/speech_forensics/features" />
             <excludedPath path="/nas/home/cborrelli/speech_forensics/notebook/pickle" />
             <excludedPath path="/nas/home/cborrelli/speech_forensics/google" />
+            <excludedPath path="/nas/home/cborrelli/speech_forensics/rai" />
+            <excludedPath path="/nas/home/cborrelli/speech_forensic/models" />
+            <excludedPath path="/nas/home/cborrelli/speech_forensics/pickle" />
           </excludedPaths>
         </serverdata>
       </paths>

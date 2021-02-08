@@ -1,8 +1,5 @@
 import warnings
-
 warnings.simplefilter('ignore', category=FutureWarning)
-warnings.simplefilter('ignore', category=RuntimeWarning)
-
 import numpy as np
 import sklearn.model_selection
 import sklearn.ensemble
@@ -11,54 +8,30 @@ import sklearn.utils
 import os
 from tqdm import tqdm
 import pandas as pd
-from skimage.util.shape import view_as_windows
-
 pd.options.mode.chained_assignment = None
 
 
-
-def df_to_feat_idx_wind(feat_df, key, fun, window_length, return_label=False):
-    X = np.asarray(feat_df[key].values)
-    Y_v = np.asarray(feat_df['y_value'])
-    Y_l = np.asarray(feat_df['y_label'])
-    XX = []
-    YY_v = []
-    YY_l = []
-    if key == 'mfcc':
-        for i, x in enumerate(X):
-            x = np.asarray(x).T.squeeze()
-            xw = view_as_windows(x, window_shape=(window_length, x.shape[1]),
-                                 step=(int(window_length * 0.5), x.shape[1])).squeeze()
-            fun_xw = fun(xw).squeeze()
-            XX.append(fun_xw)
-            if return_label:
-                YY_v.append(np.repeat(Y_v[i], fun_xw.shape[0]))
-                YY_l.append(np.repeat(Y_l[i], fun_xw.shape[0]))
-
-        XX = np.asarray(np.concatenate(XX, axis=0))
-        if return_label:
-            YY_v = np.asarray(np.concatenate(YY_v, axis=0))
-            YY_l = np.asarray(np.concatenate(YY_l, axis=0))
-    else:
-        for i, x in enumerate(X):
-            x = np.asarray(x).squeeze()
-            xw = view_as_windows(x, window_shape=(window_length,), step=int(window_length * 0.5))
-            fun_xw = fun(xw)
-            fun_xw = fun_xw.reshape(-1, 1)
-            XX.append(fun_xw)
-            if return_label:
-                YY_v.append(np.repeat(Y_v[i], fun_xw.shape[0]))
-                YY_l.append(np.repeat(Y_l[i], fun_xw.shape[0]))
-
-        XX = np.asarray(np.concatenate(XX, axis=0))
-        if return_label:
-            YY_v = np.asarray(np.concatenate(YY_v, axis=0))
-            YY_l = np.asarray(np.concatenate(YY_l, axis=0))
-
-    return XX, YY_v, YY_l
+def df_to_feat_idx(feat_df, key, fun):
+    X = feat_df.apply(lambda x: np.asarray(x[key]).squeeze().T[np.where(x['rms_idx'] == 1)].T, axis=1)
+    X = X.apply(fun)
+    X = X.apply(lambda x: np.reshape(x, (1, -1)))
+    X = np.concatenate(X).squeeze()
+    if len(X.shape) == 1:
+        X.shape += (1,)
+    return X
 
 
-def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max, win_feature_length):
+def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max):
+
+    res_file_name = 'res_norm-{}_outliers-{}_rms-{}_alg-{}_win-{}.pkl'.format(norm,
+                                                                              filter_outliers,
+                                                                              str(rms_th).replace('.', ''),
+                                                                              alg,
+                                                                              win_min_max)
+    if os.path.exists(os.path.join('/nas/home/cborrelli/speech_forensics/results_add', res_file_name)):
+        return
+
+
     # Load the features
     test_data_path = '/nas/home/cborrelli/speech_forensics/notebook/pickle/features_test-clean.pkl'
     train_data_path = '/nas/home/cborrelli/speech_forensics/notebook/pickle/features_train-clean-100.pkl'
@@ -83,8 +56,7 @@ def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max, win
     if win_min_max:
         n_win_min = 50
         n_win_max = 250
-        feat_df = feat_df.loc[
-            np.where(np.logical_and(feat_df['n_win'] >= n_win_min, feat_df['n_win'] <= n_win_max))[0]].reset_index()
+        feat_df = feat_df.loc[np.where(np.logical_and(feat_df['n_win'] >= n_win_min, feat_df['n_win'] <= n_win_max))[0]].reset_index()
 
     # Filter out outliers
     if filter_outliers:
@@ -103,37 +75,32 @@ def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max, win
     # Compute feature matrix
     key_list = ['mfcc', 'sfl', 'sc', 'sroff', 'zcr', 'rms']
 
-
     X_mean_list = []
     for key in key_list:
-        X_m, _, _ = df_to_feat_idx_wind(feat_df, key, lambda x: np.mean(x, axis=1), window_length=win_feature_length)
-        X_mean_list += [X_m]
-
+        X_mean_list += [df_to_feat_idx(feat_df, key, lambda x: np.mean(x, axis=-1))]
     X_mean = np.concatenate(X_mean_list, axis=1)
 
     X_std_list = []
     for key in key_list:
-        X_s, _, _ = df_to_feat_idx_wind(feat_df, key, lambda x: np.std(x, axis=1), window_length=win_feature_length)
-        X_std_list += [X_s]
+        X_std_list += [df_to_feat_idx(feat_df, key, lambda x: np.std(x, axis=-1))]
     X_std = np.concatenate(X_std_list, axis=1)
 
     X_max_list = []
     for key in key_list:
-        X_m, _, _ = df_to_feat_idx_wind(feat_df, key, lambda x: np.max(x, axis=1), window_length=win_feature_length)
-        X_max_list += [X_m]
+        X_max_list += [df_to_feat_idx(feat_df, key, lambda x: np.max(x, axis=-1))]
     X_max = np.concatenate(X_max_list, axis=1)
 
     X_min_list = []
     for key in key_list:
-        X_m, y_rg, y_cl_multi = df_to_feat_idx_wind(feat_df, key, lambda x: np.min(x, axis=1),
-                                                    window_length=win_feature_length, return_label=True)
-        X_min_list += [X_m]
+        X_min_list += [df_to_feat_idx(feat_df, key, lambda x: np.min(x, axis=-1))]
     X_min = np.concatenate(X_min_list, axis=1)
 
     X = np.concatenate([X_mean, X_std, X_max, X_min], axis=1)
 
-    y_cl = y_rg >= 0.5
-
+    # Retrieve labels
+    y_cl_multi = np.array(feat_df['y_label'], dtype=np.float) - 1  # labels for classification
+    y_cl = np.array(feat_df['y_value'], dtype=np.float) >= 0.5  # labels for classification
+    y_rg = np.array(feat_df['y_value'], dtype=np.float)  #  values for regression
 
     # Normalize features
     if norm == 'zscore':
@@ -168,23 +135,16 @@ def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max, win
     res_df.loc[:, 'y_pred_r'] = y_pred_r
 
     # Save results
-    res_file_name = 'res_norm-{}_outliers-{}_rms-{}_alg-{}_win-{}-winfeat-{}.pkl'.format(norm,
-                                                                              filter_outliers,
-                                                                              str(rms_th).replace('.', ''),
-                                                                              alg,
-                                                                              win_min_max,
-                                                                              str(win_feature_length))
-    res_df.to_pickle(os.path.join('/nas/home/cborrelli/speech_forensics/results', res_file_name))
+    res_df.to_pickle(os.path.join('/nas/home/cborrelli/speech_forensics/results_add', res_file_name))
 
 
 if __name__ == '__main__':
     # Params
-    param_dict = {'norm': ['minmax'],
+    param_dict = {'norm': ['minmax', 'zscore', 'nonorm'],
                   'filter_outliers': [True, False],
-                  'rms_th': [0],
+                  'rms_th': [0, 0.25, 0.50, 0.75],
                   'alg': ['svm', 'rf'],
-                  'win_min_max': [True, False],
-                  'win_feature_length': [10, 12, 14, 16, 18, 20]
+                  'win_min_max': [True, False]
                   }
 
     # Generate experiments list

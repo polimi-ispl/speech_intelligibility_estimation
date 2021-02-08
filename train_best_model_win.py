@@ -5,10 +5,16 @@ import sklearn.model_selection
 import sklearn.ensemble
 import sklearn.svm
 import sklearn.utils
-import os
-from tqdm import tqdm
+import pickle
 import pandas as pd
 pd.options.mode.chained_assignment = None
+import sklearn.model_selection
+import sklearn.ensemble
+import sklearn.svm
+import sklearn.utils
+import os
+import pandas as pd
+base_path = '/Users/Clara/Desktop/Dottorato/AudioForensics/projects/speech_forensics'
 
 
 def df_to_feat_idx(feat_df, key, fun):
@@ -21,21 +27,12 @@ def df_to_feat_idx(feat_df, key, fun):
     return X
 
 
-def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max):
-
-    res_file_name = 'res_norm-{}_outliers-{}_rms-{}_alg-{}_win-{}.pkl'.format(norm,
-                                                                              filter_outliers,
-                                                                              str(rms_th).replace('.', ''),
-                                                                              alg,
-                                                                              win_min_max)
-    if os.path.exists(os.path.join('/nas/home/cborrelli/speech_forensics/results_add', res_file_name)):
-        return
-
+def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max, num_classes):
 
     # Load the features
-    test_data_path = '/nas/home/cborrelli/speech_forensics/notebook/pickle/features_test-clean.pkl'
-    train_data_path = '/nas/home/cborrelli/speech_forensics/notebook/pickle/features_train-clean-100.pkl'
-    dev_data_path = '/nas/home/cborrelli/speech_forensics/notebook/pickle/features_dev-clean.pkl'
+    test_data_path = base_path + '/notebook/pickle/sphinx/features_test-clean.pkl'
+    train_data_path = base_path + '/notebook/pickle/sphinx/features_train-clean-100.pkl'
+    dev_data_path = base_path + '/notebook/pickle/sphinx/features_dev-clean.pkl'
 
     feat_train_df = pd.read_pickle(train_data_path)
     feat_train_df['dataset'] = 'train'
@@ -56,7 +53,8 @@ def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max):
     if win_min_max:
         n_win_min = 50
         n_win_max = 250
-        feat_df = feat_df.loc[np.where(np.logical_and(feat_df['n_win'] >= n_win_min, feat_df['n_win'] <= n_win_max))[0]].reset_index()
+        feat_df = feat_df.loc[
+            np.where(np.logical_and(feat_df['n_win'] >= n_win_min, feat_df['n_win'] <= n_win_max))[0]].reset_index()
 
     # Filter out outliers
     if filter_outliers:
@@ -98,9 +96,13 @@ def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max):
     X = np.concatenate([X_mean, X_std, X_max, X_min], axis=1)
 
     # Retrieve labels
-    y_cl_multi = np.array(feat_df['y_label'], dtype=np.float) - 1  # labels for classification
+    #y_cl_multi = np.array(feat_df['y_label'], dtype=np.float) - 1  # labels for classification
     y_cl = np.array(feat_df['y_value'], dtype=np.float) >= 0.5  # labels for classification
     y_rg = np.array(feat_df['y_value'], dtype=np.float)  #  values for regression
+
+    bins = np.arange(0, 1, 1/num_classes)
+    y_cl_multi = np.array(np.digitize(y_rg, bins) - 1, dtype=np.float)
+
 
     # Normalize features
     if norm == 'zscore':
@@ -117,39 +119,40 @@ def train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max):
     # Select algorithm
     if alg == 'svm':
         clf = sklearn.svm.SVC(kernel='rbf', gamma='auto', random_state=0)
+        clf_bin = sklearn.svm.SVC(kernel='rbf', gamma='auto', random_state=0)
         regr = sklearn.svm.SVR(gamma='auto')
     else:
         clf = sklearn.ensemble.RandomForestClassifier(class_weight='balanced', random_state=0)
+        clf_bin = sklearn.svm.SVC(kernel='rbf', gamma='auto', random_state=0)
         regr = sklearn.ensemble.RandomForestRegressor(random_state=0)
 
     # Train
-    y_pred_cl = sklearn.model_selection.cross_val_predict(clf, X_norm, y_cl, cv=5, n_jobs=-1)
-    y_pred_mcl = sklearn.model_selection.cross_val_predict(clf, X_norm, y_cl_multi, cv=5, n_jobs=-1)
-    y_pred_r = sklearn.model_selection.cross_val_predict(regr, X_norm, y_rg, cv=5, n_jobs=-1)
+    #cl = clf_bin.fit(X_norm, y_cl)
+    mcl = clf.fit(X_norm, y_cl_multi)
+    #r = regr.fit(X_norm, y_rg)
 
-    # Store results
-    sel_columns = ['path', 'noise', 'snr', 'y_value', 'y_label', 'n_win', 'rms_idx']
-    res_df = feat_df[sel_columns]
-    res_df.loc[:, 'y_pred_cl'] = y_pred_cl
-    res_df.loc[:, 'y_pred_mcl'] = y_pred_mcl
-    res_df.loc[:, 'y_pred_r'] = y_pred_r
+    #out_filename = base_path + '/models/rai_r.pkl'
+    #with open(out_filename, 'wb') as file:
+    #    pickle.dump(r, file)
 
-    # Save results
-    res_df.to_pickle(os.path.join('/nas/home/cborrelli/speech_forensics/results_add', res_file_name))
+    #out_filename = base_path + '/models/rai_cl.pkl'
+    #with open(out_filename, 'wb') as file:
+    #    pickle.dump(cl, file)
+
+    out_filename = base_path + '/models/rai_mcl.pkl'
+    with open(out_filename, 'wb') as file:
+        pickle.dump(mcl, file)
+
+    return
 
 
 if __name__ == '__main__':
-    # Params
-    param_dict = {'norm': ['nonorm'],
-                  'filter_outliers': [True, False],
-                  'rms_th': [0, 0.25, 0.50, 0.75],
-                  'alg': ['svm', 'rf'],
-                  'win_min_max': [True, False]
-                  }
+    norm = 'zscore'
+    filter_outliers = True
+    win_min_max = True
+    rms_th = 0
+    alg = 'svm'
+    num_classes = 3
 
-    # Generate experiments list
-    param_list = sklearn.model_selection.ParameterGrid(param_dict)
 
-    # Loop over experiments
-    for params in tqdm(param_list):
-        train_one_configuration(**params)
+    train_one_configuration(norm, filter_outliers, rms_th, alg, win_min_max, num_classes)
