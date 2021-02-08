@@ -2,17 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8ae8bb09-0383-4275-9a1c-515aecfdf1e1" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebook/generate_modified_dataset.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebook/generate_modified_dataset.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebook/transcribe_dataset_folder.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebook/transcribe_dataset_folder.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_A.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_B.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_C.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_windowing_A.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_windowing_B.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_windowing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_windowing_C.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add_noise_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/add_noise_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/collect_features_in_df.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/collect_features_in_df.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/collect_wind_results.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/collect_wind_results.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compute_features.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/compute_features.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/dataset_generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_windowing.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/test_windowing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_best_model_win.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/train_best_model_win.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_google.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/train_google.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_windowing.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/train_windowing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transcribe_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/transcribe_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transcribe_train_360_temp.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_scripts/transcribe_train_360_temp.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,12 +82,13 @@
     <property name="settings.editor.selected.configurable" value="web.server" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/python_scripts" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/bash_scripts" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager" selected="Python.train">
@@ -101,7 +105,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/collect_features_in_df.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python_scripts/collect_features_in_df.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -123,7 +127,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dataset_generation.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python_scripts/dataset_generation.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -179,6 +183,8 @@
       <option name="presentableId" value="Default" />
       <updated>1560431943846</updated>
       <workItem from="1612782880127" duration="2293000" />
+      <workItem from="1612805399727" duration="2446000" />
+      <workItem from="1612810792747" duration="601000" />
     </task>
     <servers />
   </component>
@@ -194,21 +200,18 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="WindowStateProjectService">
     <state x="100" y="125" width="1480" height="749" key="DiffContextDialog" timestamp="1612783471755">
       <screen x="0" y="25" width="1680" height="949" />
     </state>
     <state x="100" y="125" width="1480" height="749" key="DiffContextDialog/0.25.1680.949@0.25.1680.949" timestamp="1612783471755" />
-    <state x="200" y="106" width="1480" height="749" key="DirDiffDialog" timestamp="1612785268104">
+    <state x="200" y="106" width="1480" height="749" key="DirDiffDialog" timestamp="1612810714751">
       <screen x="0" y="25" width="1680" height="949" />
     </state>
-    <state x="200" y="106" width="1480" height="749" key="DirDiffDialog/0.25.1680.949@0.25.1680.949" timestamp="1612785268104" />
-    <state x="469" y="103" key="SettingsEditor" timestamp="1612785267768">
+    <state x="200" y="106" width="1480" height="749" key="DirDiffDialog/0.25.1680.949@0.25.1680.949" timestamp="1612810714751" />
+    <state x="469" y="103" key="SettingsEditor" timestamp="1612808405634">
       <screen x="0" y="25" width="1680" height="949" />
     </state>
-    <state x="469" y="103" key="SettingsEditor/0.25.1680.949@0.25.1680.949" timestamp="1612785267768" />
+    <state x="469" y="103" key="SettingsEditor/0.25.1680.949@0.25.1680.949" timestamp="1612808405634" />
   </component>
 </project>
